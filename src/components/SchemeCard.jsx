@@ -1,14 +1,14 @@
 import React from 'react';
 import './SchemeCard.css';
 
-const SchemeCard = () => {
+const SchemeCard = (props) => {
   return (
     <div className="scheme-card">
-      <h3>Support for Value Addition - Support to R&G units</h3>
+      <h3>{props.data.Name}</h3>
       <p>Ministry Of Commerce And Industry</p>
-      <p>This scheme aims to enhance the quality of coffee products...</p>
-      <span className="tag">Agriculture</span>
-      <span className="tag">Subsidy</span>
+      <p>{props.data.Description}</p>
+      <span className="tag">{props.data["Application Mode"]}</span>
+      <span className="tag">{props.data["Employment"]}</span>
     </div>
   );
 };
