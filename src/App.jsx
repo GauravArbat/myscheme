@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import SearchBar from './components/SearchBar';
 import SchemeCard from './components/SchemeCard';
 import './App.css';
 
+function toID(text) {
+  if (text && text.id) {
+    text = text.id;
+  } else if (text && text.userid) {
+    text = text.userid;
+  } else if (text && text.roomid) {
+    text = text.roomid;
+  }
+  if (typeof text !== "string" && typeof text !== "number")
+    return "";
+  return ("" + text).toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
 const App = () => {
+    const [state, setState] = useState("Maharashtra");
+    const [ministry, setMinistry] = useState("agriculture");
+    const [residence, setResidence] = useState(null);
+    const [benefit, setBenefit] = useState(null);
+    const [dbt, setDbt] = useState(null);
+    const [mode, setMode] = useState(null);
+
+
   let data = [
     {
      "Name": "Agri-Clinics And Agri-Business Centres Scheme",
@@ -259,15 +280,40 @@ const App = () => {
      "Description": "The Sub-Mission on Agricultural Mechanization was launched in 2014-15 by the Ministry of Agriculture and Farmers’ Welfare."
     }
    ]
+   let newData = []
+
+   if(residence != null) {
+    data.forEach((ele) => {
+      if(ele.Residence == residence) newData.push(ele)
+    })
+   }
+   if(mode != null) {
+
+    data.forEach((ele) => {
+      if(ele["Application Mode"] == mode) newData.push(ele)
+    })
+   }
+   if(benefit != null) {
+    data.forEach((ele) => {
+      if(ele.Benefit == residence) newData.push(ele)
+    })
+   }
+   if(dbt != null) {
+    data.forEach((ele) => {
+      if(ele.DBT == dbt) newData.push(ele)
+    })
+   }
    
   return (
     <div className="container">
-      <Sidebar />
+      <Sidebar setMode = {setMode} setBenefit={setBenefit} setDbt={setDbt} setResidence={setResidence}  />
       <div className="content">
-        <SearchBar />
+        <SearchBar setMode = {setMode} setBenefit={setBenefit} setDbt={setDbt} setResidence={setResidence}  />
         <div className="scheme-list">
-        {data.map((element) => {
-          return <SchemeCard data = {element}/>
+        {newData.length ? newData.map((element) => {
+          return <SchemeCard key={element.Name} data = {element}/>
+        }) : data.map((element) => {
+          return <SchemeCard key={element.Name} data = {element}/>
         })}
      
         </div>

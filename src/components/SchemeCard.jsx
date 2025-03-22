@@ -9,6 +9,9 @@ const SchemeCard = (props) => {
       <p>{props.data.Description}</p>
       <span className="tag">{props.data["Application Mode"]}</span>
       <span className="tag">{props.data["Employment"]}</span>
+      <span className="tag">{props.data["Residence"]}</span>
+      <span className="tag">{props.data["Benefit"]}</span>
+
     </div>
   );
 };
